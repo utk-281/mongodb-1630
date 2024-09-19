@@ -30,3 +30,7 @@ let obj = {
 
 // https://www.mongodb.com/try/download/community ==> mongodb compass
 // https://www.mongodb.com/try/download/shell ==> shell
+
+// https://github.com/utk-281/mongodb-1630
+
+// open excalidraw.com
