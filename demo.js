@@ -45,7 +45,64 @@ let obj = {
 
 //? 1) use database-name
 //    ==> this will create a new database
-//    ==>  this will be used to switch between existing databases
+//    ==> this will be used to switch between existing databases
 
 //? 2) show dbs/ show databases
 //    ==> to display all the databases
+
+//? 3) create a collection
+// ==> db.createCollection("collection-name")
+
+//! create 2 databases namely movies and ratings and inside movies database create a "list" collection and inside ratings databases create a "reviews" collection
+
+//? 4) to delete a collection
+// ==> db.collection-name.drop()
+
+//? 5) to display all the collections
+// ==> show collections
+
+//? 6) to insert a document
+// ==> db.collection-name.insertOne({k1:v1, k2:v2, ........})
+// db.teachers.insertOne({ name: "ashwin", subjects: ["html", "css", "js"] });
+// db.teachers.insertOne({ name: "chetna", address: "bengaluru" });
+
+// ObjectId('66ed5f4d11a0c08dd9c73bf9') ==> bson type hexadecimal string
+// it is unique for each and every document and it will be created whenever we insert a new document.
+// size of _id ==> 12 bytes
+// ==> first 4 bytes is a timestamp
+// ==> next 5 bytes is a random value
+// ==> last 3 bytes is an incrementing counter
+
+//? 7) insert multiple documents
+// ==> db.createCollection.insertMany([ {} , {} , {} ,......])
+db.students.insertMany([
+  { name: "John", age: 12 },
+  { name: "Vi", age: 23 },
+  { name: "Chetna", age: 34 },
+]);
+
+//? 8) to fetch/display single document
+// db.collection-name.findOne({filter}, {projection}, {options})
+db.students.findOne(); // findOne() will return the first document in the collection
+
+// ! { filter } ==> condition
+// ! { projection } ==> fields to be displayed
+// ! { options } ==> options like sort, skip, limit
+
+//? 9) to display all the documents
+// db.collection-name.find({filter}, {projection}, {options}) ==> will give an array
+db.teachers.find();
+
+// ! { filter } ==> condition
+// ! { projection } ==> fields to be displayed
+// ! { options } ==> options like sort, skip, limit
+
+//? 10) delete a document
+// ==> db.collection-name.deleteOne({filter})
+db.students.deleteOne({});
+// ! { filter } ==> condition
+
+//? 11) to delete all documents
+// ==> db.collection-name.deleteMany({filter})
+db.students.deleteMany({});
+// ! { filter } ==> condition

@@ -1,0 +1,12 @@
+{
+    "key1":"String",
+    "key2":false,
+    "key3":12132,
+    "key4":12.234,
+    "key5":null,
+    "key6":undefined,
+    "key7":function(){},
+    "key8":[1,2,3],
+    "key9":{},
+    "key10":Date.now()
+}
