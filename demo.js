@@ -34,3 +34,18 @@ let obj = {
 // https://github.com/utk-281/mongodb-1630
 
 // open excalidraw.com
+
+//! mongoDB ==> mongodb is a no-sql database which stores data in documents (JSON/BSON format). it has dynamic schema, it is flexible, open source, cross-platform.
+
+//! mongodb compass ==> it is a user interface through which we can perform CRUD operations visually.
+
+//! mongodb shell ==> it is a user interface through which we can perform CRUD operations in the terminal.
+
+//! commands for mongosh
+
+//? 1) use database-name
+//    ==> this will create a new database
+//    ==>  this will be used to switch between existing databases
+
+//? 2) show dbs/ show databases
+//    ==> to display all the databases
