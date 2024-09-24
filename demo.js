@@ -160,4 +160,21 @@ db.emp.find({ $and: [{ job: "salesman" }, { deptNo: 10 }] });
 //! $not ==> { field-name : {$not : { condition }} }
 db.emp.find({ sal: { $not: { $gt: 1500 } } });
 
+// fetching on the basis of nested objects fields
 db.users.find({ "address.city": "chennai" });
+
+//fetching on the basis of _id (created by mongoDB) ==> pass the _id field inside ObjectId()
+db.users.find({ _id: ObjectId("66f2a8bc569da2e43ac73bfb") });
+
+//fetching on the basis of _id (created by user) ==> pass the _id field directly like any other normal fields
+db.users.find({ _id: 1 });
+
+// find the details of users who are from banglore and age is greater than 23
+db.users.find({ $and: [{ age: { $gt: 23 } }, { "address.city": { $eq: "banglore" } }] });
+
+// display the sal and eName of employees having salary greater than 1500 and less than 2500
+db.emp.find({ $and: [{ sal: { $gt: 1500 } }, { sal: { $lt: 2500 } }] });
+
+db.emp.find({ $nor: [{ sal: { $gt: 1500 } }, { sal: { $lt: 2500 } }] });
+
+db.emp.find({ $and: [{ sal: { $gt: 1500 } }, { sal: { $gt: 2500 } }] });
