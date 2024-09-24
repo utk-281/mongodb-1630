@@ -143,3 +143,21 @@ db.emp.find({ deptNo: 20, deptNo: 10 }); // in this case deptNo 10 will be appli
 //! details of employees working in dept 10 and 20 each
 db.emp.find({ deptNo: { $in: [10, 20] } }); // $in operator displays the document which matches any of the values
 // implicit OR operator
+
+db.emp.find({ sal: { $lt: 3000 }, sal: { $gt: 1000 } }); // last condition will get executed
+
+db.emp.find({ deptNo: 10, job: "clerk" }); // implicit AND operator
+
+//!=========================================== logical operators================ ==> whenever we have to check more than one condition we go for logical operators
+
+// and , or , nor , not
+
+//! $and ==> { $and/ $or/ $nor : [ {cond-1}, {cond-2}, {cond-3}, ...... ] }
+// details of emp working as clerk in department 10.
+db.emp.find({ $and: [{ job: "salesman" }, { deptNo: 10 }] });
+
+// find the details of employees which are not earning more than 1500
+//! $not ==> { field-name : {$not : { condition }} }
+db.emp.find({ sal: { $not: { $gt: 1500 } } });
+
+db.users.find({ "address.city": "chennai" });

@@ -1,0 +1,154 @@
+[{
+  "_id": {
+    "$oid": "66f2a7ed569da2e43ac73bf8"
+  },
+  "name": "santanu",
+  "age": 25,
+  "salary": 60000,
+  "gender": "male",
+  "address": {
+    "city": "chennai",
+    "state": "tamil nadu",
+    "country": "india"
+  },
+  "skills": {
+    "frontend": [
+      "html",
+      "css",
+      "js"
+    ],
+    "backend": [
+      "js"
+    ],
+    "database": [
+      "mongodb",
+      "mysql",
+      "postgresql"
+    ]
+  },
+  "hobbies": [
+    "cricket",
+    "music"
+  ]
+},
+{
+  "_id": {
+    "$oid": "66f2a83c569da2e43ac73bf9"
+  },
+  "name": "sree",
+  "age": 24,
+  "salary": 50000,
+  "gender": "male",
+  "address": {
+    "city": "banglore",
+    "state": "karnataka",
+    "country": "india"
+  },
+  "skills": {
+    "frontend": [
+      "reactJS",
+      "css",
+      "js"
+    ],
+    "backend": [
+      "js",
+      "java"
+    ],
+    "database": [
+      "mongodb",
+      "mysql"
+    ]
+  },
+  "hobbies": [
+    "cricket",
+    "games"
+  ]
+},
+{
+  "_id": {
+    "$oid": "66f2a87a569da2e43ac73bfa"
+  },
+  "name": "mansaa",
+  "age": 26,
+  "salary": 55000,
+  "gender": "female",
+  "address": {
+    "city": "banglore",
+    "state": "karnataka",
+    "country": "india"
+  },
+  "skills": {
+    "backend": [
+      "js",
+      "java",
+      "c++",
+      "python"
+    ],
+    "database": [
+      "mongodb",
+      "mysql"
+    ]
+  },
+  "hobbies": [
+    "drawing",
+    "music"
+  ]
+},
+{
+  "_id": {
+    "$oid": "66f2a8bc569da2e43ac73bfb"
+  },
+  "name": "chetna",
+  "age": 25,
+  "salary": 50000,
+  "gender": "female",
+  "address": {
+    "city": "dehradun",
+    "state": "uttarakhand",
+    "country": "india"
+  },
+  "skills": {
+    "backend": [
+      "js",
+      "nodeJS",
+      "mongoDB"
+    ],
+    "database": [
+      "mongodb",
+      "mysql"
+    ]
+  },
+  "hobbies": [
+    "drawing",
+    "music"
+  ]
+},
+{
+  "_id": {
+    "$oid": "66f2a8ea569da2e43ac73bfc"
+  },
+  "name": "utk",
+  "age": 25,
+  "salary": 40000,
+  "gender": "male",
+  "address": {
+    "city": "noida",
+    "state": "up",
+    "country": "india"
+  },
+  "skills": {
+    "backend": [
+      "js",
+      "nodeJS",
+      "java"
+    ],
+    "database": [
+      "mongodb",
+      "mysql"
+    ]
+  },
+  "hobbies": [
+    "cricket",
+    "football"
+  ]
+}]
