@@ -178,3 +178,59 @@ db.emp.find({ $and: [{ sal: { $gt: 1500 } }, { sal: { $lt: 2500 } }] });
 db.emp.find({ $nor: [{ sal: { $gt: 1500 } }, { sal: { $lt: 2500 } }] });
 
 db.emp.find({ $and: [{ sal: { $gt: 1500 } }, { sal: { $gt: 2500 } }] });
+
+// find the details of employees who were hired during 1980
+db.emp.find({
+  $and: [
+    { hireDate: { $gte: new Date("1-jan-1980") } },
+    { hireDate: { $lte: new Date("31-dec-1980") } },
+  ],
+});
+
+// find the details of employees working as clerk and were hired after 83
+db.emp.find({
+  $and: [{ job: "clerk" }, { hireDate: { $gt: new Date("31-dec-1983") } }],
+});
+
+//! pattern matching ==> for matching pattern we use $regex
+// syntax ==> { field-name : { $regex:/pattern/ } }
+
+//? name starts with letter "a"
+db.emp.find({ eName: { $regex: /^a/ } });
+
+//? name ends with letter "n"
+db.emp.find({ eName: { $regex: /n$/ } });
+
+//? name has letter "l" in it
+db.emp.find({ eName: { $regex: /l/ } });
+
+//? letter "n" is present at third position from starting
+db.emp.find({ eName: { $regex: /^..n/ } });
+
+//? letter "e" is at second last position
+db.emp.find({ eName: { $regex: /e.$/ } });
+
+//? name has exactly 4 letters
+db.emp.find({ eName: { $regex: /^....$/ } });
+
+//? display the details of employees working as clerk in department 20 having a in their name
+db.emp.find({ $and: [{ eName: { $regex: /a/ } }, { deptNo: 20 }, { job: "clerk" }] });
+
+// fetching documents from array
+//? display the details of users who are having "cricket" as a hobby
+db.users.find({ hobbies: "cricket" });
+
+//? display the details of users having hobbies as drawing and music
+db.users.find({ hobbies: { $all: ["drawing", "music"] } });
+
+//? display the details of users having front end skills as reactJS
+db.users.find({ "skills.frontend": "reactJS" });
+
+//? display the details of users having back end skills as either java or nodeJS
+db.users.find({ "skills.backend": { $in: ["java", "nodeJS"] } });
+
+//? display the details of users having back end skills as either java and nodeJS
+db.users.find({ "skills.backend": { $all: ["java", "nodeJS"] } });
+
+//? display the details of users having back end skills array size of 2
+db.users.find({ "skills.backend": { $size: 2 } });
