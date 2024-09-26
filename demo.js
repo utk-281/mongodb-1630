@@ -234,3 +234,71 @@ db.users.find({ "skills.backend": { $all: ["java", "nodeJS"] } });
 
 //? display the details of users having back end skills array size of 2
 db.users.find({ "skills.backend": { $size: 2 } });
+
+db.emp.find({ havingInsurance: false });
+
+// { filter part }
+
+//! findOne/find({filter}, {projection})
+//! updateOne/Many({filter}, {updating value}, {options})
+//? filter part is used to filter out the required documents
+//? in updating part we update the documents
+//? inside options we have upsert.
+
+//! for updating documents we mainly use the following operators ==>
+// $set ==> it is used to update the existing fields and we can also create new fields
+// $unset ==> it is used to remove the fields
+// $inc ==> it is used to increase or decrease the value of a field
+// $max ==> it sets the maximum value of a field
+// $min ==> it sets the minimum value of a field
+
+// update the totalHoursWorked of employee with empNo 7521 to 40hrs (updating the existing field)
+db.emp.updateOne({ empNo: 7521 }, { $set: { totalHoursWorked: 42 } }, { upsert: true });
+db.emp.updateOne({ empNo: 7521 }, { $set: { totalHoursWorked: 40 } });
+db.emp.updateOne({ empNo: 7521 }, { $set: { totalHoursWorked: "" } });
+
+// add bonus field to all the employees
+db.emp.updateMany({}, { $set: { bonus: 1000 } });
+
+db.emp.updateOne({ empNo: 752146545 }, { $set: { totalHoursWorked: 40 } }, { upsert: true });
+
+// add "bonus" field to the employees who are working as salesman (adding a new field)
+db.emp.updateMany({ job: "salesman" }, { $set: { bonus: 1200 } });
+
+db.emp.updateOne({ eName: "utk" }, { $set: { skills: ["nodejs"] } }, { upsert: false });
+// { eName: "utk" }, { $set: { skills: ["nodejs"] } this is the provided value .  IF condition did not match, then it will look for upsert
+
+//! whenever we want to update all the present documents then we leave the filter part empty.
+
+// ! ==> if upsert is false : then it will do nothing
+// ! ==> if upsert is true : then it will create a new document with the provided value
+
+/* //! {  _id:ObjectId("66ed5f4d11a0c08dd9c73bf9"),
+ !         eName:"utk", 
+ !         skills:["nodejs"]
+ !       } */
+//! this is an example of upsert document
+
+// $unset => used to remove a field
+
+// remove the field totalHoursWorked from the employee named "ward"
+// syntax ==> {filter}, {$unset: {field-to-be-removed: ""}}
+db.emp.updateOne({ eName: "ward" }, { $unset: { totalHoursWorked: "" } });
+
+// we can also remove multiple fields at a time
+db.emp.updateOne({ eName: "ward" }, { $unset: { havingInsurance: "", city: "" } });
+
+db.emp.updateOne({ eName: "ward" }, { $unset: { bonus: "" } });
+
+//! $inc ==> syntax ==> ({filter}, {$inc: {field-to-be-updated: +/-value}})
+// if we provide positive value then it will increase the value
+// if we provide negative value then it will decrease the value
+
+// increase the bonus of employee having mgr as 7698 by 500
+db.emp.updateOne({ mgr: 7698 }, { $inc: { bonus: 500 } }); // bonus will be increased by 500, total bonus will be 1000 + 500 = 1700
+
+//! if the field is not present in the document then it will create a new field with the provided value
+db.emp.updateOne({ eName: "ward123" }, { $inc: { incentive: 10 } });
+
+//! $max and $min ==>
+// syntax ==> ({filter}, {$max/$min: {field-to-be-updated: value}})
