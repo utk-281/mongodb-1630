@@ -298,7 +298,7 @@ db.emp.updateOne({ eName: "ward" }, { $unset: { bonus: "" } });
 db.emp.updateOne({ mgr: 7698 }, { $inc: { bonus: 500 } }); // bonus will be increased by 500, total bonus will be 1000 + 500 = 1700
 
 //! if the field is not present in the document then it will create a new field with the provided value
-db.emp.updateOne({ eName: "ward123" }, { $inc: { incentive: 10 } });
+db.emp.updateOne({ eName: "ward" }, { $inc: { incentive: 10 } });
 
 //! $max and $min ==>
 // syntax ==> ({filter}, {$max/$min: {field-to-be-updated: value}})
