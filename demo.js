@@ -302,3 +302,56 @@ db.emp.updateOne({ eName: "ward" }, { $inc: { incentive: 10 } });
 
 //! $max and $min ==>
 // syntax ==> ({filter}, {$max/$min: {field-to-be-updated: value}})
+//? in case of max ==> if the value provided is lesser than the stored value than it will not be updated.
+//? in case of min ==> if the value  provided is larger than the stored value than it will not be updated.
+
+// set the maximum bonus of employee named "ward" to 1200
+db.emp.updateOne({ eName: "ward" }, { $max: { bonus: 1200 } });
+
+// set the minimum bonus of employee named "ward" to 1000
+db.emp.updateOne({ eName: "ward" }, { $min: { bonus: 1500 } });
+
+//! $rename ==> it is used to rename a field
+// syntax ==> ({filter}, {$rename: {"oldFieldName": "newFieldName"}})
+
+// rename the field eName to emp_name of all the employees
+db.emp.updateMany({}, { $rename: { eName: "emp_name" } });
+
+//! cursor ==> it is a pointer which points to a collection of documents
+//! cursor will retrieve the data in batches
+
+//! cursor is a pointer which is returned upon the execution of find(), which points to a collection of documents.
+
+//! 1) cursor.count() ==> it will count the number of documents
+db.emp.find().count(); // db.emp.find() ==> it will return a cursor
+// count() ==> it is deprecated, instead of count(), we use countDocuments()
+
+// syntax to use countDocuments ==> db.collection-name.countDocuments({})
+db.emp.countDocuments();
+
+//! 2) cursor.forEach() ==> this will iterate over the documents
+db.emp.find().forEach((doc) => {
+  console.log(doc.emp_name, doc.job);
+});
+
+//! data modelling ==>  1)  how data is stored  2) what is the relation between the data
+
+// data modelling is the process of defining how data is stored and what is the relation between the data
+
+//! relation between the data
+//? mainly 2 types ==>  embed and reference
+
+// embed relation ___________ ==> it is called a single structure or de-normalized model.
+//! it can only store data upto 16MB
+db.users.insertOne({
+  name: "san",
+  age: 24,
+  address: {
+    city: "chennai",
+    state: "TN",
+  },
+  contactDetails: {
+    email: "abc@gamil.com",
+    phoneNo: 123456789,
+  },
+});
