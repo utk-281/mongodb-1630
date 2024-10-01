@@ -355,3 +355,214 @@ db.users.insertOne({
     phoneNo: 123456789,
   },
 });
+
+//! reference relation ==>
+
+db.users.insertMany([
+  { name: "san", age: 24, gender: "male" },
+  { name: "sree", age: 24, gender: "male" },
+  { name: "chetna", age: 24, gender: "female" },
+]);
+
+db.address.insertMany([
+  { city: "chennai", state: "TN" },
+  { city: "bengaluru", state: "KA" },
+  { city: "dehradun", state: "UT" },
+]);
+
+db.users.updateOne({ name: "san" }, { $set: { address: ObjectId("66fbdb6654e46a233ac73bfb") } });
+
+db.users.updateOne({ name: "chetna" }, { $set: { address: ObjectId("66fbdb6654e46a233ac73bfd") } });
+
+db.users.updateOne({ name: "sree" }, { $set: { address: ObjectId("66fbdb6654e46a233ac73bfc") } });
+
+//! topic of aggregation ==>
+/* db.users.aggregate([
+  {
+    $match: {
+      name: "san",
+    },
+  },
+  {
+    $lookup: {
+      from: "address",
+      localField: "address",
+      foreignField: "_id",
+      as: "address",
+    },
+  },
+]);
+ */
+
+//! data modelling ==> how it's stored and what is the relation between the data
+db.createCollection("users", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["name", "age", "gender"],
+      properties: {
+        name: {
+          bsonType: "string",
+          description: "it is required",
+        },
+        age: {
+          bsonType: "int",
+          description: "it is required",
+        },
+        gender: {
+          bsonType: "string",
+          description: "it is required",
+        },
+      },
+    },
+  },
+});
+
+db.users.insertOne({
+  name: "san",
+  age: 25,
+  gender: "male",
+});
+
+/*
+
+{
+  name:"string",
+  hobbies:["string"]
+}
+
+
+ */
+
+db.createCollection("users1", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "oject",
+      required: ["name", "hobbies"],
+      properties: {
+        name: {
+          bsonType: "string",
+        },
+        hobbies: {
+          bsonType: "array",
+          items: {
+            bsonType: "string",
+          },
+        },
+      },
+    },
+  },
+});
+
+db.users1.insertOne({
+  name: "san",
+  hobbies: ["cricket", "music"],
+});
+
+/*
+
+{
+  name:"string",
+  age:"int"
+  gender:"string",
+  havingInsurance:boolean,
+  sal:decimal,
+  address:{
+    city:"string",
+    state:"string"
+    pinCode:"int"
+  },
+  skills:{
+    fE:["string"],
+    bE:["string"]
+  },
+  hobbies:[ {
+                indoor:["string"],
+                outdoor:["string"]
+          }]
+}
+ */
+
+db.createCollection("employees", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["name", "age", "gender", "havingInsurance", "sal", "address", "skills"],
+      properties: {
+        name: {
+          bsonType: "string",
+        },
+        age: {
+          bsonType: "int",
+        },
+        gender: {
+          bsonType: "string",
+        },
+        havingInsurance: {
+          bsonType: "bool",
+        },
+        sal: {
+          bsonType: "double",
+        },
+        address: {
+          bsonType: "object",
+          required: ["city", "state", "pinCode"],
+          properties: {
+            city: {
+              bsonType: "string",
+            },
+            state: {
+              bsonType: "string",
+            },
+            pinCode: {
+              bsonType: "int",
+            },
+          },
+        },
+        skills: {
+          bsonType: "object",
+          required: ["fE", "bE"],
+          properties: {
+            fE: {
+              bsonType: "array",
+              items: {
+                bsonType: "string",
+              },
+            },
+            bE: {
+              bsonType: "array",
+              items: {
+                bsonType: "string",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+});
+//! error will not be generated until and unless all the required fields are present even in the nested objects
+//! make sure all the required fields are present, besides that we can add extra properties
+
+db.employees.insertOne({
+  name: "san",
+  age: 25,
+  gender: "male",
+  havingInsurance: true,
+  sal: 123456789,
+  address: {
+    city: "chennai",
+    state: "TN",
+    pinCode: 123456,
+  },
+  skills: {
+    fE: ["html", "css", "js"],
+    bE: ["js", "java", "python"],
+  },
+  hobbies: [
+    {
+      indoor: ["chess"],
+      outdoor: ["swimming"],
+    },
+  ],
+});
