@@ -566,3 +566,124 @@ db.employees.insertOne({
     },
   ],
 });
+
+//! find the number of employees in the "20th" department
+db.emp.find({ deptNo: 20 }).count();
+
+//! find the number of employees in every department
+
+//! aggregation ==>
+
+/* syntax ==> db.collection-name.aggregate([
+    {stage 1},  ==> $match
+    {stage 2},  ==> $group  
+    {stage 3},  ==> $sort  
+    {stage 4},  ==> $project  
+    {stage 5},  ==> $lookup  
+]) */
+
+//! find the details of employees working as clerk using aggregation
+db.emp.aggregate([
+  {
+    $match: {
+      job: "clerk", //! inside $match stage we pass the filter condition
+    },
+  },
+]);
+
+//! find the number of employees in every department using aggregation
+
+/* syntax for using $group stage
+    db.collection-name.aggregate([
+        {
+          $group:{
+                _id:"$field-name", //! every time when we pass the field-name as value we have to use $ as prefix.
+            }
+        }
+    ])
+ */
+
+db.emp.aggregate([
+  {
+    $group: {
+      _id: "$sal",
+    },
+  },
+]);
+
+//! details of employees working in department 10 and 20 both using aggregation
+
+db.emp.aggregate([
+  {
+    $match: {
+      deptNo: { $in: [10, 20] },
+    },
+  },
+]);
+
+//! details of employees along with annual salary.
+
+/*
+
+    {
+        $addField:{ annualSalary:{
+                      $multiply:["$sal" ,12 ]
+                                  }
+                  }
+    }
+
+*/
+db.emp.aggregate([
+  {
+    $addFields: {
+      anSal: {
+        $multiply: ["$sal", 12],
+      },
+    },
+  },
+]);
+
+//! details of employees along with annual salary whose annual salary is greater than 15000.
+
+db.emp.aggregate([
+  {
+    $addFields: {
+      annualSal: {
+        $multiply: ["$sal", 12],
+      },
+    },
+  }, //! stage 1
+  {
+    $match: {
+      annualSal: { $gt: 15000 },
+    },
+  }, //! stage 2
+]);
+
+//! display the details of employees working as clerk in department 10 or 20 with midSal less than 6000 and having "a" in their name
+db.emp.aggregate([
+  {
+    $addFields: {
+      midSalary: {
+        $multiply: ["$sal", 6],
+      },
+    },
+  },
+  {
+    $match: {
+      $and: [
+        { job: "clerk" },
+        { deptNo: { $in: [10, 20, 30] } },
+        { midSalary: { $lt: 30000 } },
+        { emp_name: { $regex: /a/ } },
+      ],
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      emp_name: 1,
+      job: 1,
+    },
+  },
+]);
